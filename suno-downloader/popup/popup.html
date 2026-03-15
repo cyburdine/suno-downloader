@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suno MP3 Downloader</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+        <span>Suno MP3 Downloader</span>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="status-card">
+      <div class="stat">
+        <span class="stat-label">Songs Detected</span>
+        <span class="stat-value" id="songCount">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-label">Status</span>
+        <span class="stat-value status-text" id="statusText">Ready</span>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="controls">
+      <button id="scanBtn" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        Scan Page
+      </button>
+      <button id="clearBtn" class="btn btn-ghost">Clear</button>
+    </div>
+
+    <!-- Settings -->
+    <div class="settings">
+      <div class="field">
+        <label for="template">Naming Template</label>
+        <input type="text" id="template" value="mysong-###" placeholder="mysong-###" spellcheck="false" />
+        <p class="hint">Use <code>###</code> for zero-padded number &mdash; e.g. <code>mysong-###</code> &rarr; <code>mysong-001.mp3</code></p>
+      </div>
+      <div class="field">
+        <label for="subfolder">Subfolder in Downloads</label>
+        <input type="text" id="subfolder" placeholder="e.g. SunoSongs" spellcheck="false" />
+        <p class="hint">Leave blank to save directly to Downloads</p>
+      </div>
+      <div class="field">
+        <label for="concurrency">Concurrent Downloads</label>
+        <div class="concurrency-row">
+          <input type="range" id="concurrencyRange" min="1" max="10" value="3" />
+          <span class="concurrency-val" id="concurrencyVal">3</span>
+        </div>
+        <p class="hint">How many files download at the same time. Keep at 3-5 to avoid rate limits.</p>
+      </div>
+    </div>
+
+    <!-- Download tip -->
+    <div class="download-tip">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="16" x2="12" y2="12"/>
+        <line x1="12" y1="8" x2="12.01" y2="8"/>
+      </svg>
+      <span>To skip download prompts, disable <strong>"Ask where to save"</strong> in <a id="openDownloadSettings" href="#">chrome://settings/downloads</a></span>
+    </div>
+
+    <!-- Download -->
+    <div class="download-section">
+      <button id="downloadBtn" class="btn btn-download" disabled>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download All
+      </button>
+
+      <div id="progressWrap" class="progress-wrap hidden">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-label" id="progressLabel">0 / 0</p>
+      </div>
+    </div>
+
+    <!-- Song List -->
+    <div id="songListSection" class="song-list-section hidden">
+      <div class="song-list-header">
+        <span id="songListLabel">Detected Songs</span>
+      </div>
+      <div id="songList" class="song-list"></div>
+    </div>
+
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
