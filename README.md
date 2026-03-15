@@ -83,3 +83,4 @@ No data is sent anywhere. Everything stays local in your browser.
 ## License
 
 MIT — see [LICENSE](LICENSE) for details.
+
